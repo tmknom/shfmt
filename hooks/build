@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# https://docs.docker.com/docker-cloud/builds/advanced/
+
+set -x
+
+BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+VCS_REF=$(git rev-parse --short HEAD)
+VERSION=${DOCKER_TAG}
+REPO_NAME=$(echo "${DOCKER_REPO}" | cut -d / -f 2,3)
+
+docker build \
+  --build-arg BUILD_DATE="${BUILD_DATE}" \
+  --build-arg VCS_REF="${VCS_REF}" \
+  --build-arg VERSION="${VERSION}" \
+  --build-arg REPO_NAME="${REPO_NAME}" \
+  -t "${IMAGE_NAME}" .

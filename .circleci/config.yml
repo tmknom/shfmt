@@ -1,0 +1,16 @@
+# https://circleci.com/docs/2.0/building-docker-images/
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Install requirements
+          command: make install
+      - run:
+          name: Lint code
+          command: make lint
+      - run:
+          name: Build docker image
+          command: make build
