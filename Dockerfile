@@ -1,7 +1,7 @@
 FROM golang:alpine AS builder
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-RUN	apk add --no-cache git=2.18.0-r0 file=5.32-r0 && \
+RUN	apk add --no-cache git=2.18.0-r0 && \
     go get -d -v mvdan.cc/sh/cmd/shfmt && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" mvdan.cc/sh/cmd/shfmt
 
