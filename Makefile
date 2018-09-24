@@ -21,7 +21,7 @@ install: ## Install requirements
 	docker pull hadolint/hadolint
 	docker pull tmknom/markdownlint
 	docker pull koalaman/shellcheck
-	docker pull jamesmstone/shfmt
+	docker pull tmknom/shfmt
 	docker pull tmknom/prettier
 
 build: ## Build docker image
@@ -42,7 +42,7 @@ lint-markdown:
 format: format-shellscript format-markdown format-json ## Format code
 
 format-shellscript:
-	$(call list_shellscript) | xargs -I {} docker run --rm -v "$(CURDIR):/work" -w /work jamesmstone/shfmt -i 2 -ci -kp -w {}
+	$(call list_shellscript) | xargs -I {} docker run --rm -v "$(CURDIR):/work" -w /work tmknom/shfmt -i 2 -ci -kp -w {}
 
 format-markdown:
 	docker run --rm -v "$(CURDIR):/work" tmknom/prettier --parser=markdown --write '**/*.md'
