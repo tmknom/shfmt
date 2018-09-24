@@ -7,7 +7,9 @@
 [![MicroBadger Layers](https://img.shields.io/microbadger/layers/tmknom/shfmt.svg)](https://microbadger.com/images/tmknom/shfmt)
 [![License](https://img.shields.io/github/license/tmknom/shfmt.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Dockerfile template.
+Format shell script based on Docker.
+
+This is [shfmt](https://github.com/mvdan/sh) wrapper.
 
 ## Requirements
 
@@ -15,9 +17,35 @@ Dockerfile template.
 
 ## Usage
 
+### Format a file
+
 ```sh
-curl -fsSL https://raw.githubusercontent.com/tmknom/shfmt/master/install | sh -s example
-cd example
+docker run --rm -v $PWD:/work tmknom/shfmt foo.sh
+```
+
+### Format all .sh extension
+
+Use `-w` to write result to file instead of stdout.
+
+```sh
+docker run --rm -v $PWD:/work tmknom/shfmt -w **/*.sh
+```
+
+### Format Google's Shell Style Guide
+
+Use `-i N` to indent with a number of spaces instead of tabs.
+Get the formatting appropriate for [Google's Shell Style Guide](https://google.github.io/styleguide/shell.xml).
+
+```sh
+docker run --rm -v $PWD:/work tmknom/shfmt -i 2 -ci -w **/*.sh
+```
+
+### Help
+
+For details, refer to [mvdan/sh](https://github.com/mvdan/sh).
+
+```sh
+docker run --rm -v $PWD:/work tmknom/shfmt
 ```
 
 ## Makefile targets
@@ -51,7 +79,7 @@ Automatically deployed by "[DockerHub Automated Build](https://docs.docker.com/d
 2. CircleCI - Continuous Integration
    - <https://circleci.com/gh/tmknom/shfmt>
 3. Docker Hub - Docker Registry
-   - <https://hub.docker.com/r/tmknom/shfmt/>
+   - <https://hub.docker.com/r/tmknom/shfmt>
 4. MicroBadger - Docker Inspection
    - <https://microbadger.com/images/tmknom/shfmt>
 
