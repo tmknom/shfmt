@@ -23,12 +23,13 @@ install: ## Install requirements
 	docker pull koalaman/shellcheck
 	docker pull tmknom/shfmt
 	docker pull tmknom/prettier
+	docker pull tmknom/yamllint
 
 build: ## Build docker image
 	DOCKER_REPO=${DOCKER_REPO} DOCKER_TAG=${IMAGE_TAG} IMAGE_NAME=${IMAGE_NAME} hooks/build
 	docker images ${REPO_NAME}
 
-lint: lint-dockerfile lint-shellscript lint-markdown ## Lint code
+lint: lint-dockerfile lint-shellscript lint-markdown lint-yaml ## Lint code
 
 lint-dockerfile:
 	docker run --rm -i hadolint/hadolint < Dockerfile
@@ -39,7 +40,10 @@ lint-shellscript:
 lint-markdown:
 	docker run --rm -i -v "$(CURDIR):/work" tmknom/markdownlint
 
-format: format-shellscript format-markdown format-json ## Format code
+lint-yaml:
+	docker run --rm -v "$(CURDIR):/work" tmknom/yamllint --strict .
+
+format: format-shellscript format-markdown format-json format-yaml ## Format code
 
 format-shellscript:
 	$(call list_shellscript) | xargs -I {} docker run --rm -v "$(CURDIR):/work" -w /work tmknom/shfmt -i 2 -ci -kp -w {}
@@ -49,6 +53,9 @@ format-markdown:
 
 format-json:
 	docker run --rm -v "$(CURDIR):/work" tmknom/prettier --parser=json --write '**/*.json'
+
+format-yaml:
+	docker run --rm -v "$(CURDIR):/work" tmknom/prettier --parser=yaml --write '**/*.y*ml'
 
 
 # https://postd.cc/auto-documented-makefile/
