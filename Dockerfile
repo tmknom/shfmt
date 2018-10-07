@@ -1,9 +1,22 @@
+ARG SRC_PATH=/go/src/mvdan.cc/sh
+
 FROM golang:alpine AS builder
 
+ARG MODULE_VERSION=2.5.1
+
+ARG GITHUB_URI=https://github.com/mvdan/sh.git
+ARG BUILD_DIR=./cmd/shfmt
+ARG SRC_PATH
+
+WORKDIR ${SRC_PATH}
+
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-RUN	apk add --no-cache git=2.18.0-r0 && \
-    go get -d -v mvdan.cc/sh/cmd/shfmt && \
-    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" mvdan.cc/sh/cmd/shfmt
+RUN set -x && \
+    apk add --no-cache git=2.18.0-r0 && \
+    git clone ${GITHUB_URI} ./ && \
+    git fetch origin v${MODULE_VERSION} && \
+    git checkout -b tag-${MODULE_VERSION} refs/tags/v${MODULE_VERSION} && \
+    CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" ${BUILD_DIR}
 
 
 FROM scratch
@@ -24,7 +37,8 @@ LABEL org.label-schema.vendor="tmknom" \
       org.label-schema.docker.cmd="docker run --rm -v \$PWD:/work $REPO_NAME -i 2 -ci -kp foo.sh" \
       org.label-schema.schema-version="1.0"
 
-COPY --from=builder /go/shfmt /shfmt
+ARG SRC_PATH
+COPY --from=builder ${SRC_PATH}/shfmt /shfmt
 
 WORKDIR /work
 ENTRYPOINT ["/shfmt"]
