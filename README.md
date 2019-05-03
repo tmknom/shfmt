@@ -1,8 +1,8 @@
 # shfmt
 
 [![CircleCI](https://circleci.com/gh/tmknom/shfmt.svg?style=svg)](https://circleci.com/gh/tmknom/shfmt)
-[![Docker Build Status](https://img.shields.io/docker/build/tmknom/shfmt.svg)](https://hub.docker.com/r/tmknom/shfmt/builds/)
-[![Docker Automated build](https://img.shields.io/docker/automated/tmknom/shfmt.svg)](https://hub.docker.com/r/tmknom/shfmt/)
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/tmknom/shfmt.svg)](https://hub.docker.com/r/tmknom/shfmt/builds/)
+[![Docker Automated build](https://img.shields.io/docker/cloud/automated/tmknom/shfmt.svg)](https://hub.docker.com/r/tmknom/shfmt/)
 [![MicroBadger Size](https://img.shields.io/microbadger/image-size/tmknom/shfmt.svg)](https://microbadger.com/images/tmknom/shfmt)
 [![MicroBadger Layers](https://img.shields.io/microbadger/layers/tmknom/shfmt.svg)](https://microbadger.com/images/tmknom/shfmt)
 [![License](https://img.shields.io/github/license/tmknom/shfmt.svg)](https://opensource.org/licenses/Apache-2.0)
