@@ -2,7 +2,7 @@ ARG SRC_PATH=/go/src/mvdan.cc/sh
 
 FROM golang:alpine AS builder
 
-ARG MODULE_VERSION=2.5.1
+ARG MODULE_VERSION=2.6.4
 
 ARG GITHUB_URI=https://github.com/mvdan/sh.git
 ARG BUILD_DIR=./cmd/shfmt
@@ -12,7 +12,7 @@ WORKDIR ${SRC_PATH}
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 RUN set -x && \
-    apk add --no-cache git=2.18.0-r0 && \
+    apk add --no-cache git=2.20.1-r0 && \
     git clone ${GITHUB_URI} ./ && \
     git fetch origin v${MODULE_VERSION} && \
     git checkout -b tag-${MODULE_VERSION} refs/tags/v${MODULE_VERSION} && \
